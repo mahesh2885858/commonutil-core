@@ -3,7 +3,7 @@ name: Publish to npm
 # Trigger the workflow when a release is published
 on:
   push:
-    branches: -main
+    branches: [main]
 
 jobs:
   publish:

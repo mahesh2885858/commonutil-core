@@ -1,8 +1,9 @@
-# util-tool-kit
+# commonutil-core
 
 A simple utility library written in TypeScript.
 
 ## Installation
 
 ```bash
-npm install util-tool-kit
+npm install commonutil-core
+```

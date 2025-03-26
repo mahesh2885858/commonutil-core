@@ -1,6 +1,6 @@
 {
   "name": "commonutil-core",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple utility library written in TypeScript",
   "type": "module",
   "main": "./dist/index.js",
@@ -11,10 +11,21 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mahesh2885858/commonutil-core.git"
+  },
+  "homepage": "https://github.com/mahesh2885858/commonutil-core#readme",
+  "bugs": {
+    "url": "https://github.com/mahesh2885858/commonutil-core/issues"
+  },
   "scripts": {
     "build": "tsc"
   },
-  "author": "mahesh",
+  "author": {
+    "name": "mahesh",
+    "url": "https://github.com/mahesh2885858"
+  },
   "license": "MIT",
   "devDependencies": {
     "typescript": "^5.8.2"

@@ -94,8 +94,9 @@ export const isValidExpiryForCard = (
   }
 
   const parts = text.split("/");
-  const date = parts[0] + "/" + daysPerMonths[parts[0]] + "/" + parts[1];
-  const expiryDate = new Date(date);
+  const year = parseInt("20" + parts[1]);
+  const monthIndex = parseInt(parts[0]) - 1;
+  var expiryDate = new Date(year, monthIndex, daysPerMonths[parts[0]]);
   if (expiryDate > new Date()) {
     return {
       status: true,

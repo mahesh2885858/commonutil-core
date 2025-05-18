@@ -6,6 +6,8 @@
  * @throws throws error if not provided a valid string.
  */
 
+import { DEFAULT_GET_MAX_TEXT_LENGTH } from "./constants";
+
 export const uCFirst = (text: string): string => {
   if (!text.trim()) throw "String not provided";
   if (typeof text !== "string") throw "Not a string";
@@ -42,7 +44,7 @@ export const getDigits = (text: string): string => {
  * @throws throws error for invalid input
  */
 export const isValidExpiryForCard = (
-  expiry: string,
+  expiry: string
 ): {
   status: boolean;
   error: string | null;
@@ -108,4 +110,23 @@ export const isValidExpiryForCard = (
       error: "Already Expired",
     };
   }
+};
+
+/**
+ * Get's the string truncated to the specified limit with ellipsis if necessary.
+ * @param {string} [text] - The `text` parameter is a string that represents the text input that you want
+ * to process.
+ * @param {number} [limit] - Specifies the maximum length of the text that should be returned.
+ * Default is 10.
+ * @returns {string} Returns truncated string.
+ */
+export const getMaxText = (text: string, limit?: number): string => {
+  if (!text) throw "Invalid or No string provided";
+  if (!text || text.trim().length <= 0 || typeof text !== "string")
+    throw "Invalid or No string provided";
+  const returnLimit = limit ?? DEFAULT_GET_MAX_TEXT_LENGTH;
+  const givenTextLength = text.length;
+  return givenTextLength <= returnLimit
+    ? text
+    : text.slice(0, returnLimit).concat("...");
 };

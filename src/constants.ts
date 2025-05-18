@@ -1,0 +1,1 @@
+export const DEFAULT_GET_MAX_TEXT_LENGTH = 10;

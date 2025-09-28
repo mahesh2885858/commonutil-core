@@ -130,3 +130,48 @@ export const getMaxText = (text: string, limit?: number): string => {
     ? text
     : text.slice(0, returnLimit).concat("...");
 };
+
+/**
+ * Format the given digits in Indian or International format.
+ * @param {string} digits - The `digits` parameter is a string that represents a sequence of digits
+ * (numbers) that you want to format.
+ * @param {string} [format='indian'] - The `format` parameter is a string that specifies the desired
+ * formatting style for the digits. It can take two possible values: "indian" or "international". If no
+ * value is provided, it defaults to "indian".
+ * @returns {string} Returns formatted string.
+ * @throws throws error if not provided a valid string of digits.
+ */
+export const formatDigits = (
+  digits: string,
+  format: "indian" | "international" = "indian"
+) => {
+  if (!digits) throw "No digits provided";
+  if (typeof digits !== "string") throw "Not a string";
+  if (!/^\d+$/.test(digits)) throw "Not all characters are digits";
+
+  let formatted = "";
+  const splitted = digits.split("");
+  let result: string[] = [];
+
+  if (format === "indian") {
+    // Indian format: 12,34,56,789
+    if (digits.length > 3) {
+      const lastThreeDigits = splitted.splice(-3).join("");
+      result.push(lastThreeDigits);
+      while (splitted.length > 0) {
+        result.unshift(splitted.splice(-2).join(""));
+      }
+      formatted = result.join(",");
+    } else {
+      result = splitted;
+      formatted = result.join("");
+    }
+  } else {
+    // International format: 123,456,789
+    while (splitted.length > 0) {
+      result.unshift(splitted.splice(-3).join(""));
+    }
+    formatted = result.join(",");
+  }
+  return formatted;
+};

@@ -1,6 +1,6 @@
 {
   "name": "commonutil-core",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A simple utility library written in TypeScript",
   "type": "module",
   "main": "./dist/index.js",

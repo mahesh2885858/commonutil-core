@@ -133,45 +133,68 @@ export const getMaxText = (text: string, limit?: number): string => {
 
 /**
  * Format the given digits in Indian or International format.
- * @param {string} digits - The `digits` parameter is a string that represents a sequence of digits
- * (numbers) that you want to format.
- * @param {string} [format='indian'] - The `format` parameter is a string that specifies the desired
- * formatting style for the digits. It can take two possible values: "indian" or "international". If no
- * value is provided, it defaults to "indian".
- * @returns {string} Returns formatted string.
- * @throws throws error if not provided a valid string of digits.
+ * @param {string} digits - A string representing a sequence of digits (numbers) to be formatted.
+ * @param {string} [format='indian'] - Specifies the desired formatting style for the digits.
+ * It can be either "indian" (e.g., 12,34,56,789) or "international" (e.g., 123,456,789).
+ * Defaults to "indian" if not provided.
+ * @returns {string} Returns the formatted string with commas as per the specified format.
+ * @throws throws error for invalid input
  */
 export const formatDigits = (
   digits: string,
   format: "indian" | "international" = "indian"
 ) => {
-  if (!digits) throw "No digits provided";
-  if (typeof digits !== "string") throw "Not a string";
-  if (!/^\d+$/.test(digits)) throw "Not all characters are digits";
+  // Input validation
+  if (!digits) {
+    throw "No digits provided";
+  }
+  if (typeof digits !== "string") {
+    throw "Not a string";
+  }
 
-  let formatted = "";
-  const splitted = digits.split("");
+  // Check if all characters are digits (allow decimal point)
+  const digitPattern = /^[0-9.]+$/;
+  if (!digitPattern.test(digits)) {
+    throw "Not all characters are digits";
+  }
+
+  const removeDecimals = digits.split(".");
+  const integerPart = removeDecimals[0];
+  const decimalPart = removeDecimals[1];
+
+  // Don't format if less than 4 digits
+  if (integerPart.length <= 3) {
+    return digits;
+  }
+
+  const splitted = integerPart.split("");
   let result: string[] = [];
+  let formatted = "";
 
   if (format === "indian") {
     // Indian format: 12,34,56,789
-    if (digits.length > 3) {
-      const lastThreeDigits = splitted.splice(-3).join("");
-      result.push(lastThreeDigits);
-      while (splitted.length > 0) {
-        result.unshift(splitted.splice(-2).join(""));
-      }
-      formatted = result.join(",");
-    } else {
-      result = splitted;
-      formatted = result.join("");
+    const lastThreeDigits = splitted.splice(-3).join("");
+    result.push(lastThreeDigits);
+    while (splitted.length > 0) {
+      const chunk =
+        splitted.length >= 2
+          ? splitted.splice(-2).join("")
+          : splitted.splice(0).join("");
+      result.unshift(chunk);
     }
+    formatted = result.join(",");
   } else {
     // International format: 123,456,789
     while (splitted.length > 0) {
-      result.unshift(splitted.splice(-3).join(""));
+      const chunk =
+        splitted.length >= 3
+          ? splitted.splice(-3).join("")
+          : splitted.splice(0).join("");
+      result.unshift(chunk);
     }
     formatted = result.join(",");
   }
-  return formatted;
+
+  // Add decimal part if it exists
+  return decimalPart ? formatted + "." + decimalPart : formatted;
 };

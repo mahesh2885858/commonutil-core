@@ -44,7 +44,7 @@ export const getDigits = (text: string): string => {
  * @throws throws error for invalid input
  */
 export const isValidExpiryForCard = (
-  expiry: string
+  expiry: string,
 ): {
   status: boolean;
   error: string | null;
@@ -142,7 +142,7 @@ export const getMaxText = (text: string, limit?: number): string => {
  */
 export const formatDigits = (
   digits: string,
-  format: "indian" | "international" = "indian"
+  format: "indian" | "international" = "indian",
 ) => {
   // Input validation
   if (!digits) {
@@ -196,5 +196,5 @@ export const formatDigits = (
   }
 
   // Add decimal part if it exists
-  return decimalPart ? formatted + "." + decimalPart : formatted;
+  return decimalPart === undefined ? formatted : formatted + "." + decimalPart;
 };

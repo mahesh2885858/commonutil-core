@@ -198,3 +198,19 @@ export const formatDigits = (
   // Add decimal part if it exists
   return decimalPart === undefined ? formatted : formatted + "." + decimalPart;
 };
+
+export const roundValue = (value: number, precision?: number) => {
+  if (!precision) return Math.round(value);
+  if (typeof precision !== "number" || typeof value !== "number") return value;
+  const pair = (String(value) + "e").split("e");
+  const pairENotation = pair[0] + "e" + (+pair[1] + precision);
+  // @ts-ignore no need to check here
+  const result = Math.round(pairENotation);
+  const resultENotation = (String(result) + "e").split("e");
+  const rounded = +(
+    resultENotation[0] +
+    "e" +
+    (+resultENotation[1] - precision)
+  );
+  return rounded;
+};

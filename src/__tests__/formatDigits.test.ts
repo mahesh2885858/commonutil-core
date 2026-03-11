@@ -16,7 +16,7 @@ describe("formatDigits", () => {
 
   test("throws error for string with non-digit characters", () => {
     expect(() => formatDigits("123a45")).toThrow(
-      "Not all characters are digits"
+      "Not all characters are digits",
     );
   });
 
@@ -44,5 +44,6 @@ describe("formatDigits", () => {
     expect(formatDigits("00")).toBe("00");
     expect(formatDigits("0000")).toBe("0,000");
     expect(formatDigits("0000000")).toBe("00,00,000");
+    expect(formatDigits("23.")).toBe("23.");
   });
 });
